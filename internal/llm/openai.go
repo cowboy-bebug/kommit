@@ -114,8 +114,10 @@ func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSO
 
 func GenerateCommitMessage(model, context, diff string) (string, error) {
 	// constraints
-	prompt := "Without wrapping in a code block and"
-	prompt += " without suggesting comments or remarks"
+	prompt := "Without wrapping in a code block"
+	prompt += ", without using build as scope"
+	prompt += ", without suggesting `feat` for build scripts"
+	prompt += ", and without suggesting comments or remarks"
 
 	// main prompt
 	prompt += ", can you generate a conventional commit message"
