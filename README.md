@@ -36,9 +36,17 @@ emotional intelligence your git history desperately needs.
 
 ## 🧠 Installation
 
+### Using Homebrew (macOS and Linux)
+
+````bash
+brew tap cowboy-bebug/tap
+brew install kommit
+
+### Using Go
+
 ```bash
 go install github.com/cowboy-bebug/kommitment@latest
-```
+````
 
 This installs the `kommit` command-line tool.
 
