@@ -23,10 +23,17 @@ const kommitPrompt = "You are an AI that generates Conventional Git commit messa
 const jsonResponsePrompt = "Return your response as a valid JSON object."
 
 func newClient() (*openai.Client, error) {
-	apiKey := os.Getenv("OPENAI_API_KEY")
+	// KOMMIT_API_KEY takes precedence
+	apiKey := os.Getenv("KOMMIT_API_KEY")
 	if apiKey == "" {
-		return nil, fmt.Errorf("OPENAI_API_KEY environment variable not set")
+		apiKey = os.Getenv("OPENAI_API_KEY")
 	}
+
+	// If both are missing, return an error
+	if apiKey == "" {
+		return nil, fmt.Errorf("KOMMIT_API_KEY or OPENAI_API_KEY environment variable must be set")
+	}
+
 	return openai.NewClient(
 		option.WithAPIKey(apiKey),
 		option.WithRequestTimeout(timeout),
