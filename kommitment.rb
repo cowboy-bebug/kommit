@@ -1,4 +1,4 @@
-class Kommit < Formula
+class Kommitment < Formula
     desc "Therapeutic approach to git commits with AI-generated messages"
     homepage "https://github.com/cowboy-bebug/kommitment"
     version "0.1.0"
@@ -7,20 +7,20 @@ class Kommit < Formula
     on_macos do
         if Hardware::CPU.arm?
             url "https://github.com/cowboy-bebug/kommitment/releases/download/v#{version}/kommit_v#{version}_darwin_arm64.tar.gz"
-            sha256 "SHA256_DARWIN_ARM64"
+            sha256 "3d952e69607d935c4f61513f675ca3db9403ad8f9861f0483ce08b857c068157"
         else
             url "https://github.com/cowboy-bebug/kommitment/releases/download/v#{version}/kommit_v#{version}_darwin_amd64.tar.gz"
-            sha256 "SHA256_DARWIN_AMD64"
+            sha256 "8ac8b3562ec8a2738ce89ac1081a0c5ce091d5b5210140f264c803df3386e312"
         end
     end
 
     on_linux do
       if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
         url "https://github.com/cowboy-bebug/kommitment/releases/download/v#{version}/kommit_v#{version}_linux_arm64.tar.gz"
-        sha256 "SHA256_LINUX_ARM64"
+        sha256 "6e49900a693bf8db3f29a0185a70405b7ab751e40ca2a57aae4f25738dbb8629"
       else
         url "https://github.com/cowboy-bebug/kommitment/releases/download/v#{version}/kommit_v#{version}_linux_amd64.tar.gz"
-        sha256 "SHA256_LINUX_AMD64"
+        sha256 "b150358071f1897dbdf6844cbedec9928bfffc9f5e057a9e8351d82f89075657"
       end
     end
 
