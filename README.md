@@ -42,6 +42,23 @@ go install github.com/cowboy-bebug/kommitment@latest
 
 This installs the `kommit` command-line tool.
 
+### API Key Setup
+
+Kommitment requires an OpenAI API key to provide its therapeutic services:
+
+```bash
+# Set your OpenAI API key
+export OPENAI_API_KEY=your_openai_api_key
+
+# Alternatively, you can use a dedicated key for Kommitment
+export KOMMIT_API_KEY=your_kommit_specific_key
+```
+
+> **🔐 Therapy Privacy:** If both environment variables are set,
+> `KOMMIT_API_KEY` takes precedence over `OPENAI_API_KEY`. This allows you to
+> use a separate API key for Kommitment if you prefer to keep your therapy
+> sessions isolated from other OpenAI usage.
+
 ## 😌 Getting Started
 
 ### Initial Therapy Session
