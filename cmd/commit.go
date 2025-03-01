@@ -78,8 +78,8 @@ func runCommit(cmd *cobra.Command, args []string) {
 		Items: []string{
 			"Yes, I'm ready to commit to this message",
 			"Yes, but I need to edit it first",
-			"No, I need another therapy session for a better message",
-			"No, I'm terminating this therapy session (exit)",
+			" No, I need another therapy session for a better message",
+			" No, I'm terminating this therapy session (exit)",
 		},
 	}
 	_, answer, err := prompt.Run()
@@ -131,10 +131,6 @@ func runCommit(cmd *cobra.Command, args []string) {
 			os.Exit(1)
 		}
 		fmt.Println("🧐 Successfully committed! Your relationship with the repo has deepened!")
-
-	case "No, I need another therapy session for a better message":
-		runCommit(cmd, args)
-
 	case "Yes, but I need to edit it first":
 		fmt.Println("🧐 Starting your self-guided therapy session...")
 
@@ -181,8 +177,9 @@ func runCommit(cmd *cobra.Command, args []string) {
 		}
 
 		fmt.Println("🎓 Self-therapy complete! You've committed to your own path of growth.")
-
-	case "No, I'm terminating this therapy session (exit)":
+	case " No, I need another therapy session for a better message":
+		runCommit(cmd, args)
+	case " No, I'm terminating this therapy session (exit)":
 		fmt.Println("🧐 You're on your own path now. Call if your commitment issues return!")
 		fmt.Println()
 		os.Exit(0)
