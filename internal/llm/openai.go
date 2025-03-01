@@ -122,6 +122,9 @@ func GenerateCommitMessage(model, context, diff string) (string, error) {
 	// main prompt
 	prompt += ", can you generate a conventional commit message"
 
+	// scope
+	prompt += ", with lowercase scope"
+
 	// message body
 	prompt += ", with message body as bullet points for the changes"
 	prompt += ", using the imperative mood (present tense), rather than past tense"
