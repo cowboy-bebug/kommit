@@ -7,11 +7,21 @@ class Kommit < Formula
     on_macos do
         if Hardware::CPU.arm?
             url "https://github.com/cowboy-bebug/kommitment/releases/download/v#{version}/kommit_v#{version}_darwin_arm64.tar.gz"
-            sha256 "SHA256_DARWIN_ARM64" # Replace with actual SHA256
+            sha256 "SHA256_DARWIN_ARM64"
         else
             url "https://github.com/cowboy-bebug/kommitment/releases/download/v#{version}/kommit_v#{version}_darwin_amd64.tar.gz"
-            sha256 "SHA256_DARWIN_AMD64" # Replace with actual SHA256
+            sha256 "SHA256_DARWIN_AMD64"
         end
+    end
+
+    on_linux do
+      if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
+        url "https://github.com/cowboy-bebug/kommitment/releases/download/v#{version}/kommit_v#{version}_linux_arm64.tar.gz"
+        sha256 "SHA256_LINUX_ARM64"
+      else
+        url "https://github.com/cowboy-bebug/kommitment/releases/download/v#{version}/kommit_v#{version}_linux_amd64.tar.gz"
+        sha256 "SHA256_LINUX_AMD64"
+      end
     end
 
     depends_on "git"
