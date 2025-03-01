@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/cowboy-bebug/kommit/internal/llm"
-	"github.com/cowboy-bebug/kommit/internal/utils"
+	"github.com/cowboy-bebug/kommitment/internal/llm"
+	"github.com/cowboy-bebug/kommitment/internal/utils"
 	"github.com/manifoldco/promptui"
 	"github.com/openai/openai-go"
 	"github.com/spf13/cobra"

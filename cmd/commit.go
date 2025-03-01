@@ -6,8 +6,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/cowboy-bebug/kommit/internal/llm"
-	"github.com/cowboy-bebug/kommit/internal/utils"
+	"github.com/cowboy-bebug/kommitment/internal/llm"
+	"github.com/cowboy-bebug/kommitment/internal/utils"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
