@@ -1,0 +1,17 @@
+llm:
+  model: gpt-4o-mini
+commit:
+  types:
+    - build
+    - chore
+    - ci
+    - docs
+    - style
+    - refactor
+    - perf
+    - test
+    - revert
+  scopes:
+    - cmd
+    - llm
+    - utils
