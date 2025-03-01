@@ -113,26 +113,38 @@ func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSO
 }
 
 func GenerateCommitMessage(model, context, diff string) (string, error) {
-	// constraints
-	prompt := "Without wrapping in a code block"
-	prompt += ", without using build as scope"
-	prompt += ", without suggesting `feat` for build scripts"
-	prompt += ", and without suggesting comments or remarks"
-
 	// main prompt
-	prompt += ", can you generate a conventional commit message"
+	prompt := "Generate a conventional commit message"
+
+	// constraints
+	prompt += ", without:\n"
+	prompt += "- wrapping in a code block\n"
+	prompt += "- using build as scope\n"
+	prompt += "- suggesting `feat` for build scripts\n"
+	prompt += "- suggesting comments or remarks\n"
+
+	// type
+	prompt += "\nUsing conventional commit types:\n"
+	prompt += "- with type in lowercase\n"
+	prompt += "- using chore for maintenance commits\n"
 
 	// scope
-	prompt += ", with lowercase scope"
+	prompt += "\nUsing conventional commit scopes:\n"
+	prompt += "- in lowercase\n"
+
+	// subject
+	prompt += "\nUsing conventional commit message subject:\n"
+	prompt += "- in lowercase\n"
 
 	// message body
-	prompt += ", with message body as bullet points for the changes"
-	prompt += ", using the imperative mood (present tense), rather than past tense"
-	prompt += ", using titlecase for the first letter of the message body"
-	prompt += ", and breaking lines at 72 characters"
+	prompt += "\nUsing conventional commit message body:\n"
+	prompt += "- as bullet points for the changes\n"
+	prompt += "- using the imperative mood (present tense)\n"
+	prompt += "- using titlecase for the first letter of the message body\n"
+	prompt += "- breaking lines at 72 characters\n"
 
 	// context and diff
-	prompt += ", based on the following context and diff:\n"
+	prompt += "\nBased on the following context and diff:\n"
 	prompt += fmt.Sprintf("Here is context: %s\n", context)
 	prompt += fmt.Sprintf("Here is the Git diff:\n%s\n", diff)
 
