@@ -122,6 +122,7 @@ func GenerateCommitMessage(model, context, diff string) (string, error) {
 
 	// message body
 	prompt += ", with message body as bullet points for the changes"
+	prompt += ", using the imperative mood (present tense), rather than past tense"
 	prompt += ", and breaking lines at 72 characters"
 
 	// context and diff
