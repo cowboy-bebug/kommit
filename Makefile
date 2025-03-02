@@ -11,6 +11,10 @@ build-platform:
 	mkdir -p dist
 	GOOS=$(GOOS) GOARCH=$(GOARCH) go build -ldflags $(LDFLAGS) -o dist/$(OUTPUT)
 
+install:
+	$(MAKE) build
+	mv $(OUTPUT) $(GOPATH)/bin/
+
 release: release-darwin-arm64 release-darwin-amd64 release-linux-amd64 release-linux-arm64
 
 release-darwin-arm64:
