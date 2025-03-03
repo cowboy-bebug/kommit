@@ -1,5 +1,5 @@
 llm:
-  model: gpt-4o-mini
+  model: gpt-4o
 commit:
   types:
     - build
