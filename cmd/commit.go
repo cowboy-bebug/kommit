@@ -8,6 +8,7 @@ import (
 
 	"github.com/cowboy-bebug/kommitment/internal/llm"
 	"github.com/cowboy-bebug/kommitment/internal/utils"
+	"github.com/fatih/color"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -69,8 +70,9 @@ func runCommit(cmd *cobra.Command, args []string) {
 	commitMessage += "\n\n[Therapy notes by Kommitment - github.com/cowboy-bebug/kommitment]"
 
 	fmt.Println("💭 Your therapist's recommendation:")
-	fmt.Println(commitMessage)
-	fmt.Println()
+	fmt.Println("```text")
+	color.New(color.FgGreen, color.Bold).Println(commitMessage)
+	fmt.Println("```")
 
 	// Select yes/no
 	prompt := promptui.Select{
