@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/cowboy-bebug/kommitment/cmd"
+	"github.com/cowboy-bebug/kommit/cmd"
 )
 
 var (

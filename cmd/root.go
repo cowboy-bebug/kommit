@@ -10,7 +10,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "kommit",
 	Short: "😌 Git therapy for your commitment issues",
-	Long: `😌 Kommitment - AI-powered therapy for repositories with commitment issues
+	Long: `😌 Kommit - AI-powered therapy for repositories with commitment issues
 
 Tired of staring at the blank commit message prompt? Let Kommit analyze your
 changes and craft meaningful, conventional commit messages that tell the real

@@ -1,10 +1,9 @@
-# Kommitment
+# Kommit
 
 > _Because your repository has commitment issues!_
 
-Kommitment is a therapeutic approach to git commits, helping your codebase
-express itself through meaningful, conventional commit messages generated with
-AI.
+Kommit is a therapeutic approach to git commits, helping your codebase express
+itself through meaningful, conventional commit messages generated with AI.
 
 ## 🛋️ Why Therapy?
 
@@ -17,7 +16,7 @@ git commit -m "updates"
 git commit -m "it works now"
 ```
 
-Your future self (and your teammates) deserve better. Kommitment provides the
+Your future self (and your teammates) deserve better. Kommit provides the
 emotional intelligence your git history desperately needs.
 
 ## 💊 Features
@@ -45,27 +44,27 @@ brew install kommit
 ### Using Go
 
 ```bash
-go install github.com/cowboy-bebug/kommitment@latest
+go install github.com/cowboy-bebug/kommit@latest
 ````
 
 This installs the `kommit` command-line tool.
 
 ### API Key Setup
 
-Kommitment requires an OpenAI API key to provide its therapeutic services:
+Kommit requires an OpenAI API key to provide its therapeutic services:
 
 ```bash
 # Set your OpenAI API key
 export OPENAI_API_KEY=your_openai_api_key
 
-# Alternatively, you can use a dedicated key for Kommitment
+# Alternatively, you can use a dedicated key for Kommit
 export KOMMIT_API_KEY=your_kommit_specific_key
 ```
 
 > **🔐 Therapy Privacy:** If both environment variables are set,
 > `KOMMIT_API_KEY` takes precedence over `OPENAI_API_KEY`. This allows you to
-> use a separate API key for Kommitment if you prefer to keep your therapy
-> sessions isolated from other OpenAI usage.
+> use a separate API key for Kommit if you prefer to keep your therapy sessions
+> isolated from other OpenAI usage.
 
 ## 😌 Getting Started
 
@@ -103,13 +102,13 @@ kommit commit
 
 > **💡 Therapy Tip:** The key to successful commit therapy is to stage logically
 > related changes together. Instead of worrying about writing the perfect commit
-> message, focus on what belongs together in a commit. Let Kommitment handle
+> message, focus on what belongs together in a commit. Let Kommit handle
 > translating your changes into meaningful messages - that's what your therapist
 > is here for!
 
 ## 🔍 How It Works
 
-Kommitment uses OpenAI's models to analyze your staged changes and generate
+Kommit uses OpenAI's models to analyze your staged changes and generate
 meaningful commit messages following conventional commit formats. It's like
 couples therapy between you and your future self - improving how you communicate
 today so there's less confusion tomorrow.
@@ -160,7 +159,7 @@ feat(auth): implement JWT token refresh mechanism
 - Implemented automatic refresh when token is near expiration
 - Updated documentation with new token lifecycle
 
-[Therapy notes by Kommitment - github.com/cowboy-bebug/kommitment]
+[Therapy notes by Kommit - github.com/cowboy-bebug/kommit]
 ```
 
 ## 🙏 Contributing

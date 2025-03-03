@@ -1,4 +1,4 @@
-module github.com/cowboy-bebug/kommitment
+module github.com/cowboy-bebug/kommit
 
 go 1.24.0
 

@@ -7,8 +7,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/cowboy-bebug/kommitment/internal/llm"
-	"github.com/cowboy-bebug/kommitment/internal/utils"
+	"github.com/cowboy-bebug/kommit/internal/llm"
+	"github.com/cowboy-bebug/kommit/internal/utils"
 	"github.com/fatih/color"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
@@ -72,7 +72,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 		}
 		os.Exit(1)
 	}
-	commitMessage += "\n\n[Therapy notes by Kommitment - github.com/cowboy-bebug/kommitment]"
+	commitMessage += "\n\n[Therapy notes by Kommit - github.com/cowboy-bebug/kommit]"
 
 	fmt.Println("💭 Your therapist's recommendation:")
 	fmt.Println("```text")
