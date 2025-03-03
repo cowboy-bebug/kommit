@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -61,7 +62,11 @@ func runCommit(cmd *cobra.Command, args []string) {
 	commitMessage, err := llm.GenerateCommitMessage(config.LLM.Model, context, diff)
 	if err != nil {
 		fmt.Println("😰 Commitment issues detected: Your code is experiencing emotional resistance!")
-		fmt.Println()
+		if errors.Is(err, &llm.APIKeyMissingError{}) {
+			fmt.Println("\nHave you set up your OpenAI API key? Try one of these:")
+			fmt.Println("  export OPENAI_API_KEY=\"sk-...\"")
+			fmt.Println("  export KOMMIT_API_KEY=\"sk-...\"    # For a dedicated key")
+		}
 		if Verbose {
 			log.Printf("Error generating commit message: %v", err)
 		}
