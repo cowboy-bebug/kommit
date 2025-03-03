@@ -89,9 +89,9 @@ func runCommit(cmd *cobra.Command, args []string) {
 	prompt := promptui.Select{
 		Label: "Do you want to use this commit message?",
 		Items: []string{
-			"Yes, I'm ready to commit to this message",
-			"Yes, but I need to edit it first",
-			" No, I need another therapy session for a better message",
+			"Yes, I'm ready to commit to this message (proceed)",
+			"Yes, but I need to edit it first (edit)",
+			" No, I need another therapy session for a better message (re-run)",
 			" No, I'm terminating this therapy session (exit)",
 		},
 	}
@@ -102,7 +102,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 	}
 
 	switch answer {
-	case "Yes, I'm ready to commit to this message":
+	case "Yes, I'm ready to commit to this message (proceed)":
 		fmt.Println("🧐 Preparing for your code's commitment ceremony...")
 
 		tempFile, err := os.CreateTemp("", ".kommit-msg-*.txt")
@@ -133,7 +133,6 @@ func runCommit(cmd *cobra.Command, args []string) {
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 
-		fmt.Println("🔐 If signing is enabled, you may be prompted for your passphrase.")
 		err = cmd.Run()
 		if err != nil {
 			fmt.Println("😰 Commitment issues detected: Refusing to commit!")
@@ -144,7 +143,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 			os.Exit(1)
 		}
 		fmt.Println("🧐 Successfully committed! Your relationship with the repo has deepened!")
-	case "Yes, but I need to edit it first":
+	case "Yes, but I need to edit it first (edit)":
 		fmt.Println("🧐 Starting your self-guided therapy session...")
 
 		tempFile, err := os.CreateTemp("", ".kommit-msg-*.txt")
@@ -178,7 +177,6 @@ func runCommit(cmd *cobra.Command, args []string) {
 		cmd.Stderr = os.Stderr
 
 		fmt.Println("📝 Opening your personal therapy journal (editor)...")
-		fmt.Println("🔐 If signing is enabled, you may be prompted for your passphrase.")
 
 		err = cmd.Run()
 		if err != nil {
@@ -190,7 +188,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 		}
 
 		fmt.Println("🎓 Self-therapy complete! You've committed to your own path of growth.")
-	case " No, I need another therapy session for a better message":
+	case " No, I need another therapy session for a better message (re-run)":
 		runCommit(cmd, args)
 	case " No, I'm terminating this therapy session (exit)":
 		fmt.Println("🧐 You're on your own path now. Call if your commitment issues return!")
