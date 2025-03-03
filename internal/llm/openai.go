@@ -125,16 +125,16 @@ func GenerateCommitMessage(model, context, diff string) (string, error) {
 
 	// type
 	prompt += "\nUsing conventional commit types:\n"
-	prompt += "- with type in lowercase\n"
-	prompt += "- using chore for maintenance commits\n"
+	prompt += "- in lowercase\n"
+	prompt += "- using build: for build system, scripts or settings, such as Makefile, Dockerfile, etc.\n"
+	prompt += "- using docs: for documentation only changes\n"
 
 	// scope
 	prompt += "\nUsing conventional commit scopes:\n"
-	prompt += "- in lowercase\n"
 
 	// subject
 	prompt += "\nUsing conventional commit message subject:\n"
-	prompt += "- in lowercase\n"
+	prompt += "- using the imperative mood (present tense)\n"
 
 	// message body
 	prompt += "\nUsing conventional commit message body:\n"
@@ -142,6 +142,7 @@ func GenerateCommitMessage(model, context, diff string) (string, error) {
 	prompt += "- using the imperative mood (present tense)\n"
 	prompt += "- using titlecase for the first letter of the message body\n"
 	prompt += "- breaking lines at 72 characters\n"
+	prompt += "- Generate a message body only if the changes are significant\n"
 
 	// context and diff
 	prompt += "\nBased on the following context and diff:\n"
