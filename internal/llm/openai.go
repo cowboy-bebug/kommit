@@ -31,7 +31,7 @@ func newClient() (*openai.Client, error) {
 
 	// If both are missing, return an error
 	if apiKey == "" {
-		return nil, fmt.Errorf("KOMMIT_API_KEY or OPENAI_API_KEY environment variable must be set")
+		return nil, &APIKeyMissingError{}
 	}
 
 	return openai.NewClient(
@@ -43,7 +43,7 @@ func newClient() (*openai.Client, error) {
 func chat(model, prompt string) (string, error) {
 	client, err := newClient()
 	if err != nil {
-		return "", fmt.Errorf("error creating OpenAI client: %v", err)
+		return "", err
 	}
 
 	resp, err := client.Chat.Completions.New(context.TODO(), openai.ChatCompletionNewParams{
@@ -58,7 +58,7 @@ func chat(model, prompt string) (string, error) {
 		FrequencyPenalty: openai.Float(frequencyPenalty),
 	})
 	if err != nil {
-		return "", fmt.Errorf("OpenAI request failed: %v", err)
+		return "", &OpenAIRequestError{Err: err}
 	}
 
 	return resp.Choices[0].Message.Content, nil
@@ -78,7 +78,7 @@ func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSO
 	client, err := newClient()
 	if err != nil {
 		var empty T
-		return empty, fmt.Errorf("error creating OpenAI client: %v", err)
+		return empty, err
 	}
 
 	resp, err := client.Chat.Completions.New(context.TODO(), openai.ChatCompletionNewParams{
@@ -99,14 +99,14 @@ func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSO
 	})
 	if err != nil {
 		var empty T
-		return empty, fmt.Errorf("OpenAI request failed: %v", err)
+		return empty, &OpenAIRequestError{Err: err}
 	}
 
 	content := resp.Choices[0].Message.Content
 	var result T
 	if err := json.Unmarshal([]byte(content), &result); err != nil {
 		var empty T
-		return empty, fmt.Errorf("failed to parse JSON response: %v", err)
+		return empty, &JSONParseError{Err: err}
 	}
 
 	return result, nil
