@@ -172,7 +172,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 		tempFile.Close()
 
 		// Set the GIT_EDITOR environment variable to open the editor with the file
-		cmd := exec.Command("git", "commit", "--template", tempFilePath)
+		cmd := exec.Command("git", "commit", "--template", tempFilePath, "--allow-empty-message")
 		cmd.Stdin = os.Stdin
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
