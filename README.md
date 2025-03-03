@@ -46,7 +46,7 @@ clear, meaningful commit messages that tell the real story of your changes.
 ### Using Homebrew (macOS and Linux)
 
 ```bash
-brew install cowboy-bebug/tap/git-kommit
+brew install cowboy-bebug/tap/kommit
 ```
 
 ### From Source
