@@ -73,7 +73,7 @@ export KOMMIT_API_KEY=your_kommit_specific_key
 Begin your repository's healing journey:
 
 ```bash
-kommit init
+git kommit init
 ```
 
 This creates a `.kommitrc.yaml` configuration file with the emotional
@@ -90,7 +90,7 @@ When you're ready to commit changes:
 2. Start a therapy session:
 
 ```bash
-kommit commit
+git kommit
 ```
 
 3. Review the AI-generated commit message
@@ -123,7 +123,7 @@ The therapy process:
 
 ## 🛠️ Configuration
 
-After running `kommit init`, you'll have a `.kommitrc.yaml` file with your
+After running `git kommit init`, you'll have a `.kommitrc.yaml` file with your
 therapy plan:
 
 ```yaml

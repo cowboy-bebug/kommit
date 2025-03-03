@@ -51,7 +51,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 	config, err := utils.LoadConfig()
 	if err != nil {
 		fmt.Println("😰 Commitment issues detected: You haven't booked your first therapy session!")
-		fmt.Println("(Run 'kommit init' to get on the calendar.)")
+		fmt.Println("(Run 'git kommit init' to get on the calendar.)")
 		fmt.Println()
 		if Verbose {
 			log.Printf("Error loading config: %v", err)
