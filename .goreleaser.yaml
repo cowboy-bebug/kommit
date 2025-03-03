@@ -1,0 +1,86 @@
+---
+version: 2
+project_name: kommit
+force_token: github
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: kommit
+    binary: git-kommit
+    main: ./
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+archives:
+  - format_overrides:
+      - goos: windows
+        formats: zip
+    name_template: >-
+      kommit_v{{ .Version }}_{{ .Os }}_{{ .Arch }}
+
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^ci:"
+      - Merge pull request
+      - Merge branch
+
+brews:
+  - name: kommit
+    homepage: https://github.com/cowboy-bebug/kommit
+    description: Therapeutic approach to git commits with AI-generated messages
+    license: MIT
+
+    repository:
+      owner: cowboy-bebug
+      name: homebrew-tap
+
+    commit_author:
+      name: cowboy-bebug
+      email: cowboy-bebug@users.noreply.github.com
+
+    dependencies:
+      - name: git
+      - name: go
+        version: ^1.24
+
+    install: |
+      bin.install "git-kommit"
+    test: |
+      system "#{bin}/git", "kommit", "version"
+    caveats: |
+      🧐 Your therapist is ready for session!
+
+      To begin your repository's healing journey:
+        git kommit init
+
+      Remember to set your OpenAI API key:
+        export OPENAI_API_KEY=your_openai_api_key
+
+      Or use a dedicated key for Kommit:
+        export KOMMIT_API_KEY=your_kommit_specific_key
