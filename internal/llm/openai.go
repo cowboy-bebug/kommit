@@ -131,6 +131,9 @@ func GenerateCommitMessage(model, context, diff string) (string, error) {
 
 	// scope
 	prompt += "\nUsing conventional commit scopes:\n"
+	prompt += "- use the module or package name\n"
+	prompt += "- leave empty if the changes are not related to a specific module or package\n"
+	prompt += "- leave empty if the changes are across multiple modules or packages\n"
 
 	// subject
 	prompt += "\nUsing conventional commit message subject:\n"

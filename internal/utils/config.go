@@ -75,7 +75,19 @@ func GetDefaultConfig() (*Config, error) {
 		"model": openai.ChatModelGPT4oMini,
 	})
 	v.SetDefault("commit", map[string]interface{}{
-		"types":  []string{"build", "chore", "ci", "docs", "style", "refactor", "perf", "test", "revert"},
+		"types": []string{
+			"build",
+			"chore",
+			"ci",
+			"docs",
+			"feat",
+			"fix",
+			"perf",
+			"refactor",
+			"revert",
+			"style",
+			"test",
+		},
 		"scopes": []string{},
 	})
 	return unmarshalConfig(v)
