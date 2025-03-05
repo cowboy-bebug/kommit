@@ -6,11 +6,13 @@ commit:
     - chore
     - ci
     - docs
-    - style
-    - refactor
+    - feat
+    - fix
     - perf
-    - test
+    - refactor
     - revert
+    - style
+    - test
   scopes:
     - cmd
     - llm
