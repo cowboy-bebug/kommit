@@ -114,7 +114,7 @@ func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSO
 
 func GenerateCommitMessage(model, context, diff string) (string, error) {
 	// main prompt
-	prompt := "Generate a conventional commit message"
+	prompt := "Generate a single commit message in the conventional commit message format"
 
 	// constraints
 	prompt += ", without:\n"
@@ -126,8 +126,9 @@ func GenerateCommitMessage(model, context, diff string) (string, error) {
 	// type
 	prompt += "\nUsing conventional commit types:\n"
 	prompt += "- in lowercase\n"
-	prompt += "- using build: for build system, scripts or settings, such as Makefile, Dockerfile, etc.\n"
-	prompt += "- using docs: for documentation only changes\n"
+	prompt += "- Use `build` for build system, scripts or settings, such as Makefile, Dockerfile, etc.\n"
+	prompt += "- Use `docs` for changes to the documentation, such as README, CHANGELOG, etc.\n"
+	prompt += "- Do not use `docs` for changes to scripts or code\n"
 
 	// scope
 	prompt += "\nUsing conventional commit scopes:\n"
