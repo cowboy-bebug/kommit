@@ -65,7 +65,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 	context += fmt.Sprintf("- scopes: %s\n", config.Commit.Scopes)
 
 	fmt.Println("🧐 Helping your code express its feelings to future developers...")
-	commitMessage, err := llm.GenerateCommitMessage(config.LLM.Model, context, diff)
+	commitMessage, err := llm.GenerateCommitMessage(config, diff)
 	if err != nil {
 		fmt.Println("😰 Commitment issues detected: Your code is experiencing emotional resistance!")
 		if errors.Is(err, &llm.APIKeyMissingError{}) {

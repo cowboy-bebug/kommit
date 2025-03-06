@@ -8,19 +8,69 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cowboy-bebug/kommit/internal/utils"
 	"github.com/invopop/jsonschema"
 	"github.com/openai/openai-go"
 	"github.com/openai/openai-go/option"
 )
 
-const timeout = 10 * time.Second
-const temperature = 0.0
-const topP = 1.0
-const presencePenalty = 0.0
-const frequencyPenalty = 0.0
+// OpenAI client configuration
+const (
+	timeout          = 10 * time.Second
+	temperature      = 0.0
+	topP             = 1.0
+	presencePenalty  = 0.0
+	frequencyPenalty = 0.0
+)
 
-const kommitPrompt = "You are an AI that generates Conventional Git commit messages."
-const jsonResponsePrompt = "Return your response as a valid JSON object."
+// System prompts
+const (
+	kommitSystemPrompt = "You are an AI that generates Conventional Git commit messages."
+	jsonResponsePrompt = "Return your response as a valid JSON object."
+)
+
+// User prompts
+const (
+	promptMain = "Generate a single commit message following the **Conventional Commit** format, adhering to these rules:\n"
+
+	promptGeneralRules = `
+## **General Rules**
+- Do **not**:
+  - Wrap the message in a code block.
+  - Use ` + "`" + "build" + "`" + ` as a scope.
+  - Suggest ` + "`" + "feat" + "`" + ` for build scripts.
+  - Include comments or remarks.
+`
+
+	promptCommitTypeGuidelines = `
+## **Commit Type Guidelines**
+- Use **lowercase** commit types:
+  - ` + "`" + "build" + "`" + `: For build systems, scripts, or settings (e.g., Makefile, Dockerfile).
+  - ` + "`" + "docs" + "`" + `: For documentation changes (e.g., README, CHANGELOG), **but not** script or code changes.
+`
+
+	promptScopeRules = `
+## **Scope Rules**
+- Use the **module or package name** as the scope.
+- Leave the scope **empty** if:
+  - The changes are **not** tied to a specific module or package.
+  - The changes span **multiple modules, packages, files or scopes**.
+`
+
+	promptMessageFormatting = `
+## **Message Formatting**
+- **Subject**:
+  - Use **imperative mood** (present tense).
+- **Body**:
+  - Use **bullet points**.
+  - Use **imperative mood** (present tense).
+  - Capitalize the **first letter** of each bullet point.
+  - Wrap lines at **72 characters**.
+  - Include a body **only if** the changes are significant.
+`
+
+	kommitBaseUserPrompt = promptMain + promptGeneralRules + promptCommitTypeGuidelines + promptScopeRules + promptMessageFormatting
+)
 
 func newClient() (*openai.Client, error) {
 	// KOMMIT_API_KEY takes precedence
@@ -49,7 +99,7 @@ func chat(model, prompt string) (string, error) {
 	resp, err := client.Chat.Completions.New(context.TODO(), openai.ChatCompletionNewParams{
 		Model: openai.F(model),
 		Messages: openai.F([]openai.ChatCompletionMessageParamUnion{
-			openai.SystemMessage(kommitPrompt),
+			openai.SystemMessage(kommitSystemPrompt),
 			openai.UserMessage(prompt),
 		}),
 		Temperature:      openai.Float(temperature),
@@ -88,7 +138,7 @@ func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSO
 		PresencePenalty:  openai.Float(presencePenalty),
 		FrequencyPenalty: openai.Float(frequencyPenalty),
 		Messages: openai.F([]openai.ChatCompletionMessageParamUnion{
-			openai.SystemMessage(kommitPrompt + jsonResponsePrompt),
+			openai.SystemMessage(kommitSystemPrompt + jsonResponsePrompt),
 			openai.UserMessage(prompt),
 		}),
 		ResponseFormat: openai.F[openai.ChatCompletionNewParamsResponseFormatUnion](
@@ -112,48 +162,28 @@ func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSO
 	return result, nil
 }
 
-func GenerateCommitMessage(model, context, diff string) (string, error) {
-	// main prompt
-	prompt := "Generate a single commit message in the conventional commit message format"
+func GenerateCommitMessage(config *utils.Config, diff string) (string, error) {
+	prompt := kommitBaseUserPrompt
 
-	// constraints
-	prompt += ", without:\n"
-	prompt += "- wrapping in a code block\n"
-	prompt += "- using build as scope\n"
-	prompt += "- suggesting `feat` for build scripts\n"
-	prompt += "- suggesting comments or remarks\n"
+	// context
+	prompt += "\n## Context:\n"
+	prompt += "- Allowed commit types:\n"
+	for _, t := range config.Commit.Types {
+		prompt += fmt.Sprintf("  - `%s`\n", t)
+	}
+	prompt += "- Allowed scopes **(if applicable)**:\n"
+	for _, s := range config.Commit.Scopes {
+		prompt += fmt.Sprintf("  - `%s`\n", s)
+	}
 
-	// type
-	prompt += "\nUsing conventional commit types:\n"
-	prompt += "- in lowercase\n"
-	prompt += "- Use `build` for build system, scripts or settings, such as Makefile, Dockerfile, etc.\n"
-	prompt += "- Use `docs` for changes to the documentation, such as README, CHANGELOG, etc.\n"
-	prompt += "- Do not use `docs` for changes to scripts or code\n"
+	// diff
+	prompt += "## Git Diff:\n"
+	prompt += "**Based on the following diff**:\n"
+	prompt += "```diff\n"
+	prompt += diff + "\n"
+	prompt += "```\n"
 
-	// scope
-	prompt += "\nUsing conventional commit scopes:\n"
-	prompt += "- use the module or package name\n"
-	prompt += "- leave empty if the changes are not related to a specific module or package\n"
-	prompt += "- leave empty if the changes are across multiple modules or packages\n"
-
-	// subject
-	prompt += "\nUsing conventional commit message subject:\n"
-	prompt += "- using the imperative mood (present tense)\n"
-
-	// message body
-	prompt += "\nUsing conventional commit message body:\n"
-	prompt += "- as bullet points for the changes\n"
-	prompt += "- using the imperative mood (present tense)\n"
-	prompt += "- using titlecase for the first letter of the message body\n"
-	prompt += "- breaking lines at 72 characters\n"
-	prompt += "- Generate a message body only if the changes are significant\n"
-
-	// context and diff
-	prompt += "\nBased on the following context and diff:\n"
-	prompt += fmt.Sprintf("Here is context: %s\n", context)
-	prompt += fmt.Sprintf("Here is the Git diff:\n%s\n", diff)
-
-	return chat(model, prompt)
+	return chat(config.LLM.Model, prompt)
 }
 
 type Scopes struct {
