@@ -134,6 +134,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 			os.Exit(1)
 		}
 		fmt.Println("🧐 Successfully committed! Your relationship with the repo has deepened!")
+		utils.UpdateCost(float64(result.Cost))
 	case ui.CommitOptionEdit:
 		fmt.Println("🧐 Starting your self-guided therapy session...")
 
@@ -177,6 +178,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 		}
 
 		fmt.Println("🎓 Self-therapy complete! You've committed to your own path of growth.")
+		utils.UpdateCost(float64(result.Cost))
 	case ui.CommitOptionRerun:
 		runCommit(cmd, args)
 	case ui.CommitOptionExit:
