@@ -64,8 +64,10 @@ func (m *TypeSelector) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.cursor < len(m.types)-1 {
 				m.cursor++
 			}
-		case "enter", " ":
+		case " ":
 			m.types[m.cursor].Selected = !m.types[m.cursor].Selected
+		case "enter", "return":
+			return m, tea.Quit
 		case "a":
 			for i := range m.types {
 				m.types[i].Selected = true
@@ -74,8 +76,6 @@ func (m *TypeSelector) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			for i := range m.types {
 				m.types[i].Selected = false
 			}
-		case "s", "return":
-			return m, tea.Quit
 		}
 	}
 	return m, nil
@@ -114,7 +114,7 @@ func (m *TypeSelector) View() string {
 	s += HelpStyle.Render("  Press ") + KeyStyle.Render("Space") + HelpStyle.Render(" to toggle") + "\n"
 	s += HelpStyle.Render("  Press ") + KeyStyle.Render("a") + HelpStyle.Render(" to select all") + "\n"
 	s += HelpStyle.Render("  Press ") + KeyStyle.Render("n") + HelpStyle.Render(" to deselect all") + "\n"
-	s += HelpStyle.Render("  Press ") + KeyStyle.Render("Enter") + HelpStyle.Render(" to select") + "\n"
+	s += HelpStyle.Render("  Press ") + KeyStyle.Render("Enter") + HelpStyle.Render(" to proceed") + "\n"
 	s += HelpStyle.Render("  Press ") + KeyStyle.Render("q") + HelpStyle.Render(" or ") + KeyStyle.Render("Ctrl+C") + HelpStyle.Render(" to exit") + "\n"
 
 	return s
