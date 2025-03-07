@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cowboy-bebug/kommit/internal/models"
 	"github.com/cowboy-bebug/kommit/internal/utils"
 	"github.com/invopop/jsonschema"
 	"github.com/openai/openai-go"
@@ -95,6 +96,7 @@ func newClient() (*openai.Client, error) {
 
 type ChatResult[T any] struct {
 	Message T
+	Cost    models.Cost
 }
 
 func chat(model, prompt string) (ChatResult[string], error) {
@@ -120,6 +122,7 @@ func chat(model, prompt string) (ChatResult[string], error) {
 
 	return ChatResult[string]{
 		Message: resp.Choices[0].Message.Content,
+		Cost:    models.EstimateCost(model, resp.Usage),
 	}, nil
 }
 
@@ -175,6 +178,7 @@ func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSO
 
 	return ChatResult[T]{
 		Message: result,
+		Cost:    models.EstimateCost(model, resp.Usage),
 	}, nil
 }
 
