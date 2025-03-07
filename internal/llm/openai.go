@@ -35,14 +35,15 @@ const (
 
 	promptGeneralRules = `
 ## **General Rules**
-- Do **not**:
+- **Do not**:
   - Wrap the message in a code block or triple backticks.
   - Use ` + "`" + "build" + "`" + ` as a scope.
   - Suggest ` + "`" + "feat" + "`" + ` for build scripts.
   - Include comments or remarks.
 
 - **Do**:
-	- Try your best to guess what the git diff is about.
+  - Try your best to guess what the git diff is about.
+  - Wrap lines at **72 characters**.
 `
 
 	promptCommitTypeGuidelines = `
@@ -55,7 +56,7 @@ const (
 	promptScopeRules = `
 ## **Scope Rules**
 - Use the **module or package name** as the scope.
-- Leave the scope **empty** if:
+- **Leave the scope empty** if:
   - The changes are **not** tied to a specific module or package.
   - The changes span **multiple modules, packages, files or scopes**.
 `
@@ -64,12 +65,11 @@ const (
 ## **Message Formatting**
 - **Subject**:
   - Use **imperative mood** (present tense).
-- **Body**:
+- **Body _(only if changes are significant)_:
   - Use **bullet points**.
   - Use **imperative mood** (present tense).
   - Capitalize the **first letter** of each bullet point.
   - Wrap lines at **72 characters**.
-  - Include a body **only if** the changes are significant.
 `
 
 	kommitBaseUserPrompt = promptMain + promptGeneralRules + promptCommitTypeGuidelines + promptScopeRules + promptMessageFormatting
@@ -115,6 +115,14 @@ func chat(model, prompt string) (string, error) {
 	}
 
 	return resp.Choices[0].Message.Content, nil
+}
+
+func wrapInCSVCodeBlock(x []string) string {
+	l := make([]string, len(x))
+	for i, s := range x {
+		l[i] = fmt.Sprintf("`%s`", s)
+	}
+	return fmt.Sprintf("  - %s\n", strings.Join(l, ", "))
 }
 
 func GenerateSchema[T any]() any {
@@ -168,19 +176,18 @@ func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSO
 func GenerateCommitMessage(config *utils.Config, diff string) (string, error) {
 	prompt := kommitBaseUserPrompt
 
-	// context
+	// context: commit types
 	prompt += "\n## Context:\n"
-	prompt += "- Allowed commit types:\n"
-	for _, t := range config.Commit.Types {
-		prompt += fmt.Sprintf("  - `%s`\n", t)
-	}
-	prompt += "- Allowed scopes **(if applicable)**:\n"
-	for _, s := range config.Commit.Scopes {
-		prompt += fmt.Sprintf("  - `%s`\n", s)
-	}
+	prompt += "- **Allowed commit types**:\n"
+	prompt += wrapInCSVCodeBlock(config.Commit.Types)
+
+	// context: commit scopes
+	prompt += "- **Allowed scopes _(only if changes are limited to a single scope)_:\n"
+	prompt += wrapInCSVCodeBlock(config.Commit.Scopes)
+	prompt += "  - **Note:** If the changes span multiple scopes, do not use a scope in the commit message.\n"
 
 	// diff
-	prompt += "## Git Diff:\n"
+	prompt += "\n## Git Diff:\n"
 	prompt += "**Based on the following diff**:\n"
 	prompt += "```diff\n"
 	prompt += diff + "\n"
