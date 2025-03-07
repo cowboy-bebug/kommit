@@ -2,6 +2,7 @@ package utils
 
 import (
 	"os"
+	"os/exec"
 	"path/filepath"
 	"regexp"
 	"sort"
@@ -96,6 +97,14 @@ func GetFilesFromDirectory(maxDepth int) ([]string, error) {
 			return nil
 		}
 
+		ignored, err := isGitIgnored(relPath)
+		if err == nil && ignored {
+			if info.IsDir() {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+
 		// Only include files, not directories
 		if !info.IsDir() {
 			filePaths = append(filePaths, relPath)
@@ -110,4 +119,19 @@ func GetFilesFromDirectory(maxDepth int) ([]string, error) {
 
 	sort.Strings(filePaths)
 	return filePaths, nil
+}
+
+func isGitIgnored(path string) (bool, error) {
+	_, err := ExecGit("check-ignore", "-q", path)
+
+	if err != nil {
+		if exitErr, ok := err.(*exec.ExitError); ok {
+			if exitErr.ExitCode() == 1 {
+				return false, nil // Exit code 1 means the file is not ignored
+			}
+		}
+		return false, err
+	}
+
+	return true, nil // Exit code 0 means the file is ignored
 }
