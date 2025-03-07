@@ -64,8 +64,10 @@ func runCommit(cmd *cobra.Command, args []string) {
 	context += "Optionally use the following scopes only if the changes are related to the scopes:\n"
 	context += fmt.Sprintf("- scopes: %s\n", config.Commit.Scopes)
 
-	fmt.Println("🧐 Helping your code express its feelings to future developers...")
+	s := utils.Spinner("🧐 Helping your code express its feelings to future developers...")
+	s.Start()
 	commitMessage, err := llm.GenerateCommitMessage(config, diff)
+	s.Stop()
 	if err != nil {
 		fmt.Println("😰 Commitment issues detected: Your code is experiencing emotional resistance!")
 		if errors.Is(err, &llm.APIKeyMissingError{}) {
@@ -198,6 +200,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 }
 
 var Verbose bool
+var Debug bool
 
 func init() {
 	rootCmd.SetHelpCommand(&cobra.Command{

@@ -3,6 +3,7 @@ module github.com/cowboy-bebug/kommit
 go 1.24.0
 
 require (
+	github.com/briandowns/spinner v1.23.2
 	github.com/fatih/color v1.18.0
 	github.com/invopop/jsonschema v0.13.0
 	github.com/manifoldco/promptui v0.9.0
@@ -41,6 +42,7 @@ require (
 	go.uber.org/multierr v1.9.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
 	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/term v0.1.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 )
