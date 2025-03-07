@@ -25,10 +25,10 @@ type CommitSelector struct {
 
 func NewCommitSelector() *CommitSelector {
 	choices := []string{
-		"Yes, I'm ready to commit to this message",
-		"Yes, but I need to edit it first",
-		"No, I need another therapy session for a better message",
-		"No, I'm terminating this therapy session",
+		"Yes, I'm ready to commit to this message " + KeyStyle.Render("(proceed)"),
+		"Yes, but I need to edit it first " + KeyStyle.Render("(edit)"),
+		"No, I need another therapy session for a better message " + KeyStyle.Render("(re-run)"),
+		"No, I'm terminating this therapy session " + KeyStyle.Render("(quit)"),
 	}
 
 	labels := map[string]CommitOption{
