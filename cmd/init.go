@@ -6,9 +6,8 @@ import (
 	"os"
 
 	"github.com/cowboy-bebug/kommit/internal/llm"
+	"github.com/cowboy-bebug/kommit/internal/ui"
 	"github.com/cowboy-bebug/kommit/internal/utils"
-	"github.com/manifoldco/promptui"
-	"github.com/openai/openai-go"
 	"github.com/spf13/cobra"
 )
 
@@ -49,15 +48,8 @@ func runInit(cmd *cobra.Command, args []string) {
 	}
 
 	// Select model
-	prompt := promptui.Select{
-		Label: "Choose your therapist's qualifications:",
-		Items: []string{
-			openai.ChatModelGPT4oMini,
-			openai.ChatModelGPT4o,
-			openai.ChatModelO3Mini,
-		},
-	}
-	_, model, err := prompt.Run()
+	model, err := ui.SelectModel()
+	ui.HandleQuitError(err)
 	if err != nil {
 		fmt.Println("😰 Therapy session interrupted: Failed to select your therapist.")
 		if Verbose {
@@ -66,6 +58,25 @@ func runInit(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 	config.LLM.Model = model
+
+	// Select commit types
+	types, err := ui.SelectTypes()
+	ui.HandleQuitError(err)
+	if err != nil {
+		fmt.Println("😰 Therapy session interrupted: Failed to diagnose your repo's commit type preferences.")
+		if Verbose {
+			log.Printf("Error selecting commit types: %v", err)
+		}
+		os.Exit(1)
+	}
+
+	if len(types) > 0 {
+		config.Commit.Types = types
+	}
+
+	// Restart the spinner for the next operation
+	s := utils.Spinner("🤔 Analyzing your repo's commitment issues...")
+	s.Start()
 
 	// Get scopes from commit history
 	existingScopes, err := utils.GetScopesFromHistory()
@@ -106,6 +117,7 @@ func runInit(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
+	s.Stop()
 	fmt.Println("🥹 Your repo is in therapy! Treatment plan filled successfully.")
 	fmt.Println("🥰 Run `kommit commit` to continue the healing process!")
 	utils.PrintConfigFile()
