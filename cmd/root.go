@@ -62,7 +62,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 	context += "Optionally use the following scopes only if the changes are related to the scopes:\n"
 	context += fmt.Sprintf("- scopes: %s\n", config.Commit.Scopes)
 
-	s := utils.Spinner("🧐 Helping your code express its feelings to future developers...")
+	s := ui.Spinner("🧐 Helping your code express its feelings to future developers...")
 	s.Start()
 	commitMessage, err := llm.GenerateCommitMessage(config, diff)
 	s.Stop()

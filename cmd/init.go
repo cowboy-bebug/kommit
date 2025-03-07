@@ -75,7 +75,7 @@ func runInit(cmd *cobra.Command, args []string) {
 	}
 
 	// Restart the spinner for the next operation
-	s := utils.Spinner("🤔 Analyzing your repo's commitment issues...")
+	s := ui.Spinner("🤔 Analyzing your repo's commitment issues...")
 	s.Start()
 
 	// Get scopes from commit history
