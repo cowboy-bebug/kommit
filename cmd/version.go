@@ -29,8 +29,7 @@ since their certification date, and continues to grow with each update.`,
 		fmt.Printf("Kommit %s\n", Version)
 		fmt.Printf("Commit: %s\n", Commit)
 		fmt.Printf("Built: %s\n", Date)
-		fmt.Printf("\n🧐 Therapist v%s: Licensed to treat repositories with severe commitment issues since %s.\n",
-			Version, Date[:10])
+		fmt.Printf("\n🧐 Licensed to treat repositories with severe commitment issues since 2025-03-01.\n")
 	},
 }
 
