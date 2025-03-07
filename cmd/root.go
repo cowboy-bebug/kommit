@@ -8,9 +8,9 @@ import (
 	"os/exec"
 
 	"github.com/cowboy-bebug/kommit/internal/llm"
+	"github.com/cowboy-bebug/kommit/internal/ui"
 	"github.com/cowboy-bebug/kommit/internal/utils"
 	"github.com/fatih/color"
-	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
 
@@ -85,24 +85,15 @@ func runCommit(cmd *cobra.Command, args []string) {
 	color.New(color.FgGreen, color.Bold).Println(commitMessage)
 	fmt.Println("```")
 
-	// Select yes/no
-	prompt := promptui.Select{
-		Label: "Do you want to use this commit message?",
-		Items: []string{
-			"Yes, I'm ready to commit to this message (proceed)",
-			"Yes, but I need to edit it first (edit)",
-			" No, I need another therapy session for a better message (re-run)",
-			" No, I'm terminating this therapy session (exit)",
-		},
-	}
-	_, answer, err := prompt.Run()
+	option, err := ui.SelectCommit()
+	ui.HandleQuitError(err)
 	if err != nil {
-		log.Printf("Error selecting answer: %v", err)
+		log.Printf("Error confirming commit: %v", err)
 		os.Exit(1)
 	}
 
-	switch answer {
-	case "Yes, I'm ready to commit to this message (proceed)":
+	switch option {
+	case ui.CommitOptionProceed:
 		fmt.Println("🧐 Preparing for your code's commitment ceremony...")
 
 		tempFile, err := os.CreateTemp("", ".kommit-msg-*.txt")
@@ -140,7 +131,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 			os.Exit(1)
 		}
 		fmt.Println("🧐 Successfully committed! Your relationship with the repo has deepened!")
-	case "Yes, but I need to edit it first (edit)":
+	case ui.CommitOptionEdit:
 		fmt.Println("🧐 Starting your self-guided therapy session...")
 
 		tempFile, err := os.CreateTemp("", ".kommit-msg-*.txt")
@@ -183,9 +174,9 @@ func runCommit(cmd *cobra.Command, args []string) {
 		}
 
 		fmt.Println("🎓 Self-therapy complete! You've committed to your own path of growth.")
-	case " No, I need another therapy session for a better message (re-run)":
+	case ui.CommitOptionRerun:
 		runCommit(cmd, args)
-	case " No, I'm terminating this therapy session (exit)":
+	case ui.CommitOptionExit:
 		fmt.Println("🧐 You're on your own path now. Call if your commitment issues return!")
 		os.Exit(0)
 	}
