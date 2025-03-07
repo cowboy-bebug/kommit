@@ -39,7 +39,7 @@ expressive documentation of your development journey.`,
 
 func runCommit(cmd *cobra.Command, args []string) {
 	// Check if there are staged changes
-	diff, err := utils.ExecGit("diff", "--cached", "--unified=0")
+	diff, err := utils.ExecGit("diff", "--cached")
 	if err != nil || diff == "" {
 		fmt.Println("😰 Commitment issues detected: You're not ready to commit... anything.")
 		fmt.Println("(Stage some changes first!)")
