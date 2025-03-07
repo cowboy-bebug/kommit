@@ -36,10 +36,13 @@ const (
 	promptGeneralRules = `
 ## **General Rules**
 - Do **not**:
-  - Wrap the message in a code block.
+  - Wrap the message in a code block or triple backticks.
   - Use ` + "`" + "build" + "`" + ` as a scope.
   - Suggest ` + "`" + "feat" + "`" + ` for build scripts.
   - Include comments or remarks.
+
+- **Do**:
+	- Try your best to guess what the git diff is about.
 `
 
 	promptCommitTypeGuidelines = `
