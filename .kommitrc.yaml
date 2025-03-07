@@ -16,5 +16,6 @@ commit:
   scopes:
     - cmd
     - llm
+    - models
     - ui
     - utils

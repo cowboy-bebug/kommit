@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/openai/openai-go"
+	"github.com/cowboy-bebug/kommit/internal/models"
 	"github.com/spf13/viper"
 	"gopkg.in/yaml.v3"
 )
@@ -71,10 +71,10 @@ func LoadConfig() (*Config, error) {
 
 func GetDefaultConfig() (*Config, error) {
 	v := viper.New()
-	v.SetDefault("llm", map[string]interface{}{
-		"model": openai.ChatModelGPT4oMini,
+	v.SetDefault("llm", map[string]any{
+		"model": models.OpenAIModelGPT4oMini,
 	})
-	v.SetDefault("commit", map[string]interface{}{
+	v.SetDefault("commit", map[string]any{
 		"types": []string{
 			"build",
 			"chore",

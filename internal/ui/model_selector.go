@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/openai/openai-go"
+	"github.com/cowboy-bebug/kommit/internal/models"
 )
 
 type ModelSelector struct {
@@ -16,13 +16,9 @@ type ModelSelector struct {
 
 func NewModelSelector() *ModelSelector {
 	return &ModelSelector{
-		choices: []string{
-			openai.ChatModelGPT4oMini,
-			openai.ChatModelGPT4o,
-			openai.ChatModelO3Mini,
-		},
-		cursor: 0,
-		quit:   false,
+		choices: models.OpenAISupportedModels,
+		cursor:  0,
+		quit:    false,
 	}
 }
 
