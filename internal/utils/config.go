@@ -66,7 +66,17 @@ func LoadConfig() (*Config, error) {
 	if err := v.ReadInConfig(); err != nil {
 		return nil, err
 	}
-	return unmarshalConfig(v)
+
+	config, err := unmarshalConfig(v)
+	if err != nil {
+		return nil, err
+	}
+
+	if !models.IsSupportedModel(config.LLM.Model) {
+		return nil, UnsupportedModelError{Model: config.LLM.Model}
+	}
+
+	return config, nil
 }
 
 func GetDefaultConfig() (*Config, error) {

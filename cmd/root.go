@@ -49,6 +49,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 	// Load config to get available scopes
 	config, err := utils.LoadConfig()
 	if err != nil {
+		HandleUnsupportedModelError(RootCmd, err)
 		fmt.Println("😰 Commitment issues detected: You haven't booked your first therapy session!")
 		fmt.Println("(Run 'git kommit init' to get on the calendar.)")
 		if Verbose {

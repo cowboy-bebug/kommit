@@ -37,6 +37,7 @@ func runInit(cmd *cobra.Command, args []string) {
 
 	// Get default config, if it doesn't exist
 	if err != nil {
+		HandleUnsupportedModelError(InitCmd, err)
 		config, err = utils.GetDefaultConfig()
 		if err != nil {
 			fmt.Println("😰 Therapy session interrupted: Failed to retrieve your treatment plan.")
