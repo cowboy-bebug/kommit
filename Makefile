@@ -2,7 +2,7 @@ OUTPUT := git-kommit
 VERSION := $(shell git describe --tags --always | sed 's/^v//')
 COMMIT := $(shell git rev-parse --short HEAD)
 DATE := $(shell date -u +'%Y-%m-%dT%H:%M:%SZ')
-LDFLAGS := "-X main.version=$(VERSION) -X main.commit=$(COMMIT) -X main.date=$(DATE)"
+LDFLAGS := "-s -w -X main.version=$(VERSION) -X main.commit=$(COMMIT) -X main.date=$(DATE)"
 
 build:
 	go build -ldflags $(LDFLAGS) -o $(OUTPUT)
