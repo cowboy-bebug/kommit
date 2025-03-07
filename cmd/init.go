@@ -41,7 +41,6 @@ func runInit(cmd *cobra.Command, args []string) {
 		config, err = utils.GetDefaultConfig()
 		if err != nil {
 			fmt.Println("😰 Therapy session interrupted: Failed to retrieve your treatment plan.")
-			fmt.Println()
 			if Verbose {
 				log.Printf("Error getting default config: %v", err)
 			}
@@ -61,7 +60,6 @@ func runInit(cmd *cobra.Command, args []string) {
 	_, model, err := prompt.Run()
 	if err != nil {
 		fmt.Println("😰 Therapy session interrupted: Failed to select your therapist.")
-		fmt.Println()
 		if Verbose {
 			log.Printf("Error selecting model: %v", err)
 		}
@@ -81,7 +79,6 @@ func runInit(cmd *cobra.Command, args []string) {
 	filenames, err := utils.GetFilesFromDirectory(5)
 	if err != nil {
 		fmt.Println("😰 Therapy session interrupted: Failed to retrieve your relationship history.")
-		fmt.Println()
 		if Verbose {
 			log.Printf("Error getting scopes from directory: %v", err)
 		}
@@ -92,7 +89,6 @@ func runInit(cmd *cobra.Command, args []string) {
 	scopes, err := llm.GenerateScopesFromFilenames(model, filenames, existingScopes)
 	if err != nil {
 		fmt.Println("😰 Therapy session interrupted: Failed to establish your treatment plan.")
-		fmt.Println()
 		if Verbose {
 			log.Printf("Error generating scopes from directory: %v", err)
 		}
@@ -104,7 +100,6 @@ func runInit(cmd *cobra.Command, args []string) {
 	err = utils.WriteConfig(config)
 	if err != nil {
 		fmt.Println("😰 Therapy session interrupted: Failed to write your treatment plan.")
-		fmt.Println()
 		if Verbose {
 			log.Printf("Error writing config: %v", err)
 		}
@@ -113,7 +108,6 @@ func runInit(cmd *cobra.Command, args []string) {
 
 	fmt.Println("🥹 Your repo is in therapy! Treatment plan filled successfully.")
 	fmt.Println("🥰 Run `kommit commit` to continue the healing process!")
-	fmt.Println()
 	utils.PrintConfigFile()
 	os.Exit(0)
 }

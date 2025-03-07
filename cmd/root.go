@@ -43,7 +43,6 @@ func runCommit(cmd *cobra.Command, args []string) {
 	if err != nil || diff == "" {
 		fmt.Println("😰 Commitment issues detected: You're not ready to commit... anything.")
 		fmt.Println("(Stage some changes first!)")
-		fmt.Println()
 		os.Exit(1)
 	}
 
@@ -52,7 +51,6 @@ func runCommit(cmd *cobra.Command, args []string) {
 	if err != nil {
 		fmt.Println("😰 Commitment issues detected: You haven't booked your first therapy session!")
 		fmt.Println("(Run 'git kommit init' to get on the calendar.)")
-		fmt.Println()
 		if Verbose {
 			log.Printf("Error loading config: %v", err)
 		}
@@ -110,7 +108,6 @@ func runCommit(cmd *cobra.Command, args []string) {
 		tempFile, err := os.CreateTemp("", ".kommit-msg-*.txt")
 		if err != nil {
 			fmt.Println("😰 Commitment issues detected: Refusing to prepare temporary paperwork!")
-			fmt.Println()
 			if Verbose {
 				log.Printf("Error creating temp file: %v", err)
 			}
@@ -122,7 +119,6 @@ func runCommit(cmd *cobra.Command, args []string) {
 		if _, err := tempFile.WriteString(commitMessage); err != nil {
 			tempFile.Close()
 			fmt.Println("😰 Commitment issues detected: Refusing to fill the temporary paperwork!")
-			fmt.Println()
 			if Verbose {
 				log.Printf("Error writing to temp file: %v", err)
 			}
@@ -138,7 +134,6 @@ func runCommit(cmd *cobra.Command, args []string) {
 		err = cmd.Run()
 		if err != nil {
 			fmt.Println("😰 Commitment issues detected: Refusing to commit!")
-			fmt.Println()
 			if Verbose {
 				log.Printf("Error committing: %v", err)
 			}
@@ -151,7 +146,6 @@ func runCommit(cmd *cobra.Command, args []string) {
 		tempFile, err := os.CreateTemp("", ".kommit-msg-*.txt")
 		if err != nil {
 			fmt.Println("😰 Commitment issues detected: Couldn't prepare your self-therapy materials!")
-			fmt.Println()
 			if Verbose {
 				log.Printf("Error creating temp file: %v", err)
 			}
@@ -164,7 +158,6 @@ func runCommit(cmd *cobra.Command, args []string) {
 		if _, err := tempFile.WriteString(commitMessage); err != nil {
 			tempFile.Close()
 			fmt.Println("😰 Commitment issues detected: Couldn't write your therapy starting notes!")
-			fmt.Println()
 			if Verbose {
 				log.Printf("Error writing to temp file: %v", err)
 			}
@@ -194,7 +187,6 @@ func runCommit(cmd *cobra.Command, args []string) {
 		runCommit(cmd, args)
 	case " No, I'm terminating this therapy session (exit)":
 		fmt.Println("🧐 You're on your own path now. Call if your commitment issues return!")
-		fmt.Println()
 		os.Exit(0)
 	}
 }
