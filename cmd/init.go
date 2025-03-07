@@ -98,7 +98,7 @@ func runInit(cmd *cobra.Command, args []string) {
 	}
 
 	// Generate scopes from directory
-	scopes, err := llm.GenerateScopesFromFilenames(model, filenames, existingScopes)
+	result, err := llm.GenerateScopesFromFilenames(model, filenames, existingScopes)
 	if err != nil {
 		fmt.Println("😰 Therapy session interrupted: Failed to establish your treatment plan.")
 		if Verbose {
@@ -108,7 +108,7 @@ func runInit(cmd *cobra.Command, args []string) {
 	}
 
 	// Write config
-	config.Commit.Scopes = scopes
+	config.Commit.Scopes = result.Message.Scopes
 	err = utils.WriteConfig(config)
 	if err != nil {
 		fmt.Println("😰 Therapy session interrupted: Failed to write your treatment plan.")

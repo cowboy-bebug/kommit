@@ -93,10 +93,14 @@ func newClient() (*openai.Client, error) {
 	), nil
 }
 
-func chat(model, prompt string) (string, error) {
+type ChatResult[T any] struct {
+	Message T
+}
+
+func chat(model, prompt string) (ChatResult[string], error) {
 	client, err := newClient()
 	if err != nil {
-		return "", err
+		return ChatResult[string]{}, err
 	}
 
 	resp, err := client.Chat.Completions.New(context.TODO(), openai.ChatCompletionNewParams{
@@ -111,10 +115,12 @@ func chat(model, prompt string) (string, error) {
 		FrequencyPenalty: openai.Float(frequencyPenalty),
 	})
 	if err != nil {
-		return "", &OpenAIRequestError{Err: err}
+		return ChatResult[string]{}, &OpenAIRequestError{Err: err}
 	}
 
-	return resp.Choices[0].Message.Content, nil
+	return ChatResult[string]{
+		Message: resp.Choices[0].Message.Content,
+	}, nil
 }
 
 func wrapInCSVCodeBlock(x []string) string {
@@ -135,11 +141,10 @@ func GenerateSchema[T any]() any {
 	return schema
 }
 
-func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSONSchemaJSONSchemaParam) (T, error) {
+func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSONSchemaJSONSchemaParam) (ChatResult[T], error) {
 	client, err := newClient()
 	if err != nil {
-		var empty T
-		return empty, err
+		return ChatResult[T]{}, err
 	}
 
 	resp, err := client.Chat.Completions.New(context.TODO(), openai.ChatCompletionNewParams{
@@ -159,21 +164,21 @@ func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSO
 			}),
 	})
 	if err != nil {
-		var empty T
-		return empty, &OpenAIRequestError{Err: err}
+		return ChatResult[T]{}, &OpenAIRequestError{Err: err}
 	}
 
 	content := resp.Choices[0].Message.Content
 	var result T
 	if err := json.Unmarshal([]byte(content), &result); err != nil {
-		var empty T
-		return empty, &JSONParseError{Err: err}
+		return ChatResult[T]{}, &JSONParseError{Err: err}
 	}
 
-	return result, nil
+	return ChatResult[T]{
+		Message: result,
+	}, nil
 }
 
-func GenerateCommitMessage(config *utils.Config, diff string) (string, error) {
+func GenerateCommitMessage(config *utils.Config, diff string) (ChatResult[string], error) {
 	prompt := kommitBaseUserPrompt
 
 	// context: commit types
@@ -202,7 +207,7 @@ type Scopes struct {
 
 var StructuredScopesSchema = GenerateSchema[Scopes]()
 
-func GenerateScopesFromFilenames(model string, filenames, existingScopes []string) ([]string, error) {
+func GenerateScopesFromFilenames(model string, filenames, existingScopes []string) (ChatResult[Scopes], error) {
 	prompt := "Based on the following project structure, guess module or package names used in this project:\n"
 	prompt += strings.Join(filenames, "\n")
 
@@ -223,8 +228,8 @@ func GenerateScopesFromFilenames(model string, filenames, existingScopes []strin
 
 	result, err := chatStructured[Scopes](model, prompt, schemaParam)
 	if err != nil {
-		return nil, err
+		return ChatResult[Scopes]{}, err
 	}
 
-	return result.Scopes, nil
+	return result, nil
 }

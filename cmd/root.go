@@ -65,7 +65,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 
 	s := ui.Spinner("🧐 Helping your code express its feelings to future developers...")
 	s.Start()
-	commitMessage, err := llm.GenerateCommitMessage(config, diff)
+	result, err := llm.GenerateCommitMessage(config, diff)
 	s.Stop()
 	if err != nil {
 		fmt.Println("😰 Commitment issues detected: Your code is experiencing emotional resistance!")
@@ -79,6 +79,8 @@ func runCommit(cmd *cobra.Command, args []string) {
 		}
 		os.Exit(1)
 	}
+
+	commitMessage := result.Message
 	commitMessage += fmt.Sprintf("\n\n%s", commitMessageSignature)
 
 	fmt.Println("💭 Your therapist's recommendation:")
