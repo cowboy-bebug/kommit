@@ -14,8 +14,8 @@ var (
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "🏷️ Show the therapist's credentials",
-	Long: `🏷️ Kommit Therapist Credentials - Because even AI therapists need qualifications!
+	Short: "🧐 Show the therapist's credentials",
+	Long: `🧐️ Kommit Therapist Credentials - Because even AI therapists need qualifications!
 
 This command reveals the version information about your Kommit therapist,
 including their training date and certification level.
