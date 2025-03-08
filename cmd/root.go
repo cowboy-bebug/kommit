@@ -191,10 +191,18 @@ var Debug bool
 
 func init() {
 	rootCmd.SetHelpCommand(&cobra.Command{
-		Use:    "no-help",
+		Use:    "help",
+		Short:  "🔍 Free therapy session for confused commands",
 		Hidden: true,
+		Run: func(cmd *cobra.Command, args []string) {
+			if len(args) == 0 {
+				rootCmd.Help()
+				os.Exit(0)
+			}
+		},
 	})
 
+	// TODO: add a man page
 	rootCmd.PersistentFlags().BoolP("help", "h", false,
 		"Schedule an emergency therapy session (show help)")
 
