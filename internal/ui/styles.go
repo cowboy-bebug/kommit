@@ -22,4 +22,5 @@ var (
 	UncheckedStyle    = lipgloss.NewStyle().Foreground(NeuralGrey)
 	HelpStyle         = lipgloss.NewStyle().Foreground(MutedGray)
 	KeyStyle          = lipgloss.NewStyle().Foreground(WarmOrange).Bold(true)
+	TableHeaderStyle  = lipgloss.NewStyle().Foreground(SoftGreen).Bold(true)
 )
