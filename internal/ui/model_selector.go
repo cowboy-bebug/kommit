@@ -64,12 +64,7 @@ func (m *ModelSelector) View() string {
 		s += cursor + " " + style.Render(choice) + "\n"
 	}
 
-	s += "\n\n"
-	s += HelpStyle.Render("  Use ") + KeyStyle.Render("↑/↓") + HelpStyle.Render(" or ") + KeyStyle.Render("k/j") + HelpStyle.Render(" to navigate") + "\n"
-	s += HelpStyle.Render("  Press ") + KeyStyle.Render("Enter") + HelpStyle.Render(" or ") + KeyStyle.Render("Space") + HelpStyle.Render(" to select") + "\n"
-	s += HelpStyle.Render("  Press ") + KeyStyle.Render("q") + HelpStyle.Render(" or ") + KeyStyle.Render("Ctrl+C") + HelpStyle.Render(" to exit") + "\n"
-
-	return s
+	return WrapWithKeyboardHelp(s, false)
 }
 
 func SelectModel() (string, error) {
