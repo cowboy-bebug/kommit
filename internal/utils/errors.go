@@ -16,3 +16,9 @@ func (e UnsupportedModelError) Is(target error) bool {
 	_, ok := target.(UnsupportedModelError)
 	return ok
 }
+
+type CostFileNotFoundError struct{}
+
+func (e CostFileNotFoundError) Error() string {
+	return "Cost file not found"
+}

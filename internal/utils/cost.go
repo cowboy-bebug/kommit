@@ -20,9 +20,31 @@ func costFilepath() string {
 	return filepath.Join(dir, "kommit", "cost.json")
 }
 
-type Cost struct {
-	RepoName string
-	Cost     float64
+type RepoName string
+type Cost float64
+type Costs map[RepoName]Cost
+
+func GetCosts() (Costs, error) {
+	costFilePath := costFilepath()
+	if costFilePath == "" {
+		return nil, fmt.Errorf("could not determine cost file path")
+	}
+
+	if _, err := os.Stat(costFilePath); os.IsNotExist(err) {
+		return nil, CostFileNotFoundError{}
+	}
+
+	costData, err := os.ReadFile(costFilePath)
+	if err != nil {
+		return nil, CostFileNotFoundError{}
+	}
+
+	var costs Costs
+	if err := json.Unmarshal(costData, &costs); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal cost data: %w", err)
+	}
+
+	return costs, nil
 }
 
 func UpdateCost(cost float64) error {
@@ -36,7 +58,7 @@ func UpdateCost(cost float64) error {
 		return fmt.Errorf("failed to create directory: %w", err)
 	}
 
-	repoName, err := getRepoName()
+	repoName, err := GetRepoName()
 	if err != nil {
 		return fmt.Errorf("failed to get repository name: %w", err)
 	}
@@ -62,7 +84,7 @@ func UpdateCost(cost float64) error {
 	return nil
 }
 
-func getRepoName() (string, error) {
+func GetRepoName() (string, error) {
 	fullPath, err := ExecGit("rev-parse", "--show-toplevel")
 	if err != nil {
 		return "", err
