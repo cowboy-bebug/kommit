@@ -106,6 +106,7 @@ func runInit(cmd *cobra.Command, args []string) {
 		}
 		os.Exit(1)
 	}
+	utils.UpdateCost(float64(result.Cost))
 
 	// Write config
 	config.Commit.Scopes = result.Message.Scopes
