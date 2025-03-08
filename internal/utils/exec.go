@@ -13,7 +13,7 @@ func execCmd(name string, args ...string) (string, error) {
 
 	err := cmd.Run()
 	if err != nil {
-		return "", fmt.Errorf("failed to get git diff: %v", err)
+		return "", fmt.Errorf("failed to execute: %v", err)
 	}
 
 	return out.String(), nil
