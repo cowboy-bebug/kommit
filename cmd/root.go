@@ -19,6 +19,8 @@ const (
 
 	usageApprove = "Skip the therapy session to approve the suggested message"
 	usageEdit    = "Skip the therapy session to edit the suggested message"
+	usageHelp    = "Schedule an emergency therapy session (show help)"
+	usageVerbose = "Hear all the relationship details your repo normally keeps private"
 )
 
 var rootCmd = &cobra.Command{
@@ -218,13 +220,9 @@ func init() {
 
 	rootCmd.PersistentFlags().BoolVarP(&Approve, "approve", "a", false, usageApprove)
 	rootCmd.PersistentFlags().BoolVarP(&Edit, "edit", "e", false, usageEdit)
+	rootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, usageVerbose)
 
-	// TODO: add a man page
-	rootCmd.PersistentFlags().BoolP("help", "h", false,
-		"Schedule an emergency therapy session (show help)")
-
-	rootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false,
-		"Hear all the relationship details your repo normally keeps private")
+	rootCmd.PersistentFlags().BoolP("help", "h", false, usageHelp) // TODO: add a man page
 }
 
 func Execute() {
