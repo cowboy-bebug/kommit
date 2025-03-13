@@ -109,7 +109,10 @@ func (m *TypeSelector) View() string {
 		s += cursor + " " + checkboxStyle.Render(checked) + " " + nameStyle.Render(item.Name) + "\n"
 	}
 
-	return WrapWithKeyboardHelp(s, true)
+	return WrapWithKeyboardHelp(s,
+		WithStandardNavigation(),
+		WithSelectionOptions(),
+	)
 }
 
 func (m *TypeSelector) GetSelectedTypes() []string {

@@ -88,7 +88,7 @@ func (m *CommitSelector) View() string {
 		s += fmt.Sprintf("%s %s\n", cursor, style.Render(choice))
 	}
 
-	return WrapWithKeyboardHelp(s, false)
+	return WrapWithKeyboardHelp(s, WithStandardNavigation())
 }
 
 func SelectCommit() (CommitOption, error) {

@@ -64,7 +64,7 @@ func (m *ModelSelector) View() string {
 		s += cursor + " " + style.Render(choice) + "\n"
 	}
 
-	return WrapWithKeyboardHelp(s, false)
+	return WrapWithKeyboardHelp(s, WithStandardNavigation())
 }
 
 func SelectModel() (string, error) {

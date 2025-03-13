@@ -34,7 +34,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m Model) View() string {
 	s := TitleStyle.Render("💰 Kommit Financial Therapy Session 💰") +
 		"\n\n" + m.table.View() + "\n"
-	return WrapWithKeyboardHelp(s, false)
+	return WrapWithKeyboardHelp(s, WithBasicNavigation())
 }
 
 func NewTableModel(costs utils.Costs) Model {
