@@ -47,16 +47,15 @@ func NewTableModel(costs utils.Costs) Model {
 	var totalCost float64
 
 	thisRepoIndex := 0
+	repoName, _ := utils.GetRepoName()
 	for repo, cost := range costs {
 		rows = append(rows, table.Row{string(repo), fmt.Sprintf("%.5f", cost)})
 		totalCost += float64(cost)
 
-		repoName, err := utils.GetRepoName()
-		if err != nil {
-			return Model{table: table.New(table.WithColumns(columns)), quit: false}
-		}
 		if string(repo) == repoName {
 			thisRepoIndex = len(rows) - 1
+		} else {
+			thisRepoIndex++
 		}
 	}
 	rows = append(rows, table.Row{"TOTAL", fmt.Sprintf("%.5f", totalCost)})
