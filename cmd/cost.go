@@ -12,7 +12,7 @@ import (
 
 var costCmd = &cobra.Command{
 	Use:   "cost",
-	Short: "Show the cost of your commitment therapy",
+	Short: "💰 Show the cost of your commitment therapy",
 	Long: `💰 Kommit Cost Analysis - Because emotional growth has a price tag!
 
 This command reveals how much your repository's therapy sessions have cost you so far.
