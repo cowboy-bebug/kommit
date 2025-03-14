@@ -41,12 +41,9 @@ func runCost(cmd *cobra.Command, args []string) {
 
 	if err = ui.CostTableModel(costs); err != nil {
 		ui.HandleQuitError(err)
-		if err != nil {
-			fmt.Println("😰 Financial abandonment detected: Failed to display your expenses.")
-			os.Exit(1)
-		}
+		fmt.Println("😰 Financial abandonment detected: Failed to display your expenses.")
+		os.Exit(1)
 	}
-
 }
 
 func init() {
