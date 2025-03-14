@@ -41,6 +41,8 @@ const (
   - Use ` + "`" + "build" + "`" + ` as a scope.
   - Suggest ` + "`" + "feat" + "`" + ` for build scripts.
   - Include comments or remarks.
+  - Use scope for changes that are not related to a specific module or package.
+  - Use scope for changes if multiple scopes are possible.
 
 - **Do**:
   - Try your best to guess what the git diff is about.
