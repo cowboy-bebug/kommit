@@ -80,8 +80,8 @@ const (
 )
 
 func newClient() (*openai.Client, error) {
-	// KOMMIT_API_KEY takes precedence
-	apiKey := os.Getenv("KOMMIT_API_KEY")
+	// KOMMIT_OPENAI_API_KEY takes precedence
+	apiKey := os.Getenv("KOMMIT_OPENAI_API_KEY")
 	if apiKey == "" {
 		apiKey = os.Getenv("OPENAI_API_KEY")
 	}

@@ -7,7 +7,7 @@ type OpenAIRequestError struct{ Err error }
 type JSONParseError struct{ Err error }
 
 func (e APIKeyMissingError) Error() string {
-	return "KOMMIT_API_KEY or OPENAI_API_KEY environment variable must be set"
+	return "KOMMIT_OPENAI_API_KEY or OPENAI_API_KEY environment variable must be set"
 }
 
 func (e OpenAIRequestError) Error() string {

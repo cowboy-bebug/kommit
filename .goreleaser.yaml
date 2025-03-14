@@ -80,7 +80,7 @@ brews:
         git kommit init
 
       Remember to set your OpenAI API key:
-        export OPENAI_API_KEY=your_openai_api_key
+        export OPENAI_API_KEY="sk-..."
 
       Or use a dedicated key for Kommit:
-        export KOMMIT_API_KEY=your_kommit_specific_key
+        export KOMMIT_OPENAI_API_KEY="sk-..."

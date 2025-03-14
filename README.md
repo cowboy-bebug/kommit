@@ -70,16 +70,16 @@ Kommit requires an OpenAI API key to provide its therapeutic services:
 
 ```bash
 # Set your OpenAI API key
-export OPENAI_API_KEY=your_openai_api_key
+export OPENAI_API_KEY="sk-..."
 
 # Alternatively, you can use a dedicated key for Kommit
-export KOMMIT_API_KEY=your_kommit_specific_key
+export KOMMIT_OPENAI_API_KEY="sk-..."
 ```
 
 > **🔐 Therapy Privacy:** If both environment variables are set,
-> `KOMMIT_API_KEY` takes precedence over `OPENAI_API_KEY`. This allows you to
-> use a separate API key for Kommit if you prefer to keep your therapy sessions
-> isolated from other OpenAI usage.
+> `KOMMIT_OPENAI_API_KEY` takes precedence over `OPENAI_API_KEY`. This allows
+> you to use a separate API key for Kommit if you prefer to keep your therapy
+> sessions isolated from other OpenAI usage.
 
 ## 😌 Getting Started
 

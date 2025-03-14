@@ -81,7 +81,7 @@ func runCommit(cmd *cobra.Command, args []string) {
 		if errors.Is(err, &llm.APIKeyMissingError{}) {
 			fmt.Println("\nHave you set up your OpenAI API key? Try one of these:")
 			fmt.Println("  export OPENAI_API_KEY=\"sk-...\"")
-			fmt.Println("  export KOMMIT_API_KEY=\"sk-...\"    # For a dedicated key")
+			fmt.Println("  export KOMMIT_OPENAI_API_KEY=\"sk-...\"    # For a dedicated key")
 		}
 		if Verbose {
 			log.Printf("Error generating commit message: %v", err)
