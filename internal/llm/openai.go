@@ -39,6 +39,7 @@ const (
 - **Do not**:
   - Wrap the message in a code block or triple backticks.
   - Use ` + "`" + "build" + "`" + ` as a scope.
+  - Use ` + "`" + "docs" + "`" + ` for code changes.
   - Suggest ` + "`" + "feat" + "`" + ` for build scripts.
   - Include comments or remarks.
   - Use scope for changes that are not related to a specific module or package.
