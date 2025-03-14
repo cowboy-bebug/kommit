@@ -29,7 +29,7 @@ var (
 
 // help messages
 var (
-	Navigate = fmt.Sprintf("  %s %s %s %s %s\n", Use, NavigateKey1, Or, NavigateKey2, ToProceed)
+	Navigate = fmt.Sprintf("  %s %s %s %s %s\n", Use, NavigateKey1, Or, NavigateKey2, ToNavigate)
 	Proceed  = fmt.Sprintf("  %s %s %s\n", Press, ProceedKey, ToProceed)
 	Exit     = fmt.Sprintf("  %s %s %s %s %s\n", Press, ExitKey1, Or, ExitKey2, ToExit)
 	Toggle   = fmt.Sprintf("  %s %s %s\n", Press, ToggleKey, ToToggle)
