@@ -182,8 +182,15 @@ func chatStructured[T any](model, prompt string, schema openai.ResponseFormatJSO
 	}, nil
 }
 
-func GenerateCommitMessage(config *utils.Config, diff string) (ChatResult[string], error) {
+func GenerateCommitMessage(config *utils.Config, diff, userContext string) (ChatResult[string], error) {
 	prompt := kommitBaseUserPrompt
+
+	// user context
+	if userContext != "" {
+		prompt += "\n## User Context:\n"
+		prompt += "**Use the following for the commit message subject**:\n"
+		prompt += "- " + userContext + "\n"
+	}
 
 	// context: commit types
 	prompt += "\n## Context:\n"
