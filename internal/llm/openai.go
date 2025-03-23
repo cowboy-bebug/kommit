@@ -18,7 +18,7 @@ import (
 // OpenAI client configuration
 const (
 	timeout          = 10 * time.Second
-	temperature      = 0.0
+	temperature      = 1.0
 	topP             = 1.0
 	presencePenalty  = 0.0
 	frequencyPenalty = 0.0
