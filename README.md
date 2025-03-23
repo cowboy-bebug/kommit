@@ -1,5 +1,7 @@
 # Kommit
 
+![kommit](./kommit.gif)
+
 > _Because your repository has commitment issues!_
 
 Kommit is a therapeutic approach to git commits, helping your codebase express
